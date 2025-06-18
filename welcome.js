@@ -4,14 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
   if (btn) {
     btn.addEventListener("click", function (event) {
       event.preventDefault();
-
       btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Sedang Memuat Data ...';
       btn.classList.add("disabled");
 
-      // Delay untuk memastikan efek loading terlihat
       setTimeout(function () {
         window.location.href = btn.getAttribute("href");
-      }, 500); // 500 ms delay
+      }, 500);
     });
   }
 
