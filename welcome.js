@@ -1,33 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("✅ welcome.js loaded");
+  const btn = document.getElementById("loginButton");
 
-    const isLoggedIn = document.querySelector('meta[name="is-logged-in"]')?.content === "true";
-    if (isLoggedIn) {
-        window.location.replace("/dashboard");
-        return;
-    }
+  if (btn) {
+    btn.addEventListener("click", function (event) {
+      event.preventDefault();
 
-    const loginBtn = document.getElementById("loginButton");
-    if (loginBtn) {
-        loginBtn.addEventListener("click", function (event) {
-            event.preventDefault();
-            loginBtn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Sedang Memuat Data ...';
-            loginBtn.classList.add("disabled");
+      btn.innerHTML = '<i class="fas fa-cog fa-spin"></i> Sedang Memuat Data ...';
+      btn.classList.add("disabled");
 
-            const url = loginBtn.href;
-            if (!url) return;
+      // Delay untuk memastikan efek loading terlihat
+      setTimeout(function () {
+        window.location.href = btn.getAttribute("href");
+      }, 500); // 500 ms delay
+    });
+  }
 
-            setTimeout(() => {
-                window.location.href = url;
-            }, 300);
-        });
-    }
-});
-
-window.addEventListener("pageshow", function () {
+  window.addEventListener("pageshow", function () {
     const btn = document.getElementById("loginButton");
     if (btn) {
-        btn.innerHTML = 'Masuk Sebagai Siswa / Orang Tua <i class="fas fa-play"></i>';
-        btn.classList.remove("disabled");
+      btn.innerHTML = 'Masuk Sebagai Siswa / Orang Tua <i class="fas fa-play"></i>';
+      btn.classList.remove("disabled");
     }
+  });
 });
