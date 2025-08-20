@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#wandhe, .wandhe").DataTable({
             responsive: true,
             autoWidth: false,
+            order: [[0, "desc"]],
             language: {
                 search: "Cari:",
                 lengthMenu: "Tampilkan _MENU_ data",
