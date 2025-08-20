@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         $("#wandhe, .wandhe").DataTable({
             responsive: true,
-            order: [[0, 'desc']],
             autoWidth: false,
             language: {
                 search: "Cari:",
