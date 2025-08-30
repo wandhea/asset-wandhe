@@ -46,32 +46,44 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1000);
 });
 
+let currentLoading = null;
+
 function resetLoading() {
-    document.querySelectorAll(".loading").forEach((el) => {
-        el.classList.remove("disabled", "loading");
-        if (el.hasAttribute("data-original")) {
-            el.innerHTML = el.getAttribute("data-original");
+    if (currentLoading) {
+        currentLoading.classList.remove("disabled", "loading");
+        if (currentLoading.hasAttribute("data-original")) {
+            currentLoading.innerHTML = currentLoading.getAttribute("data-original");
         }
-    });
+        currentLoading = null;
+    }
 }
 
 function showLoading(event, element) {
     event.preventDefault();
 
+    // Reset tombol yang sedang loading sebelumnya
     resetLoading();
 
+    // Simpan teks asli kalau belum ada
     if (!element.hasAttribute("data-original")) {
         element.setAttribute("data-original", element.innerHTML);
     }
 
+    // Set tombol baru sebagai loading
     element.innerHTML = '<i class="nav-icon fas fa-cog fa-spin"></i> Memuat Data ... ';
     element.classList.add("disabled", "loading");
 
-    window.location.href = element.getAttribute("href");
+    // Simpan state tombol yg loading
+    currentLoading = element;
+
+    // Redirect
+    setTimeout(() => {
+        window.location.href = element.getAttribute("href");
+    }, 50); // kasih delay supaya reset sempat jalan
 }
 
 function handleLogout(element) {
-    
+    // Reset tombol yg loading sebelumnya
     resetLoading();
 
     if (!element.hasAttribute("data-original")) {
@@ -81,11 +93,12 @@ function handleLogout(element) {
     element.innerHTML = '<i class="nav-icon fas fa-cog fa-spin"></i> Memuat Data ...';
     element.classList.add("disabled", "loading");
 
+    currentLoading = element;
+
     document.getElementById("logout-form").submit();
 }
 
+// Reset saat back/forward browser
 window.addEventListener("pageshow", function (event) {
-    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
-        resetLoading();
-    }
+    resetLoading();
 });
