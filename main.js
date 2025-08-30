@@ -46,24 +46,46 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1000);
 });
 
+function resetLoading() {
+    document.querySelectorAll(".loading").forEach((el) => {
+        el.classList.remove("disabled", "loading");
+        if (el.hasAttribute("data-original")) {
+            el.innerHTML = el.getAttribute("data-original");
+        }
+    });
+}
+
 function showLoading(event, element) {
     event.preventDefault();
 
+    resetLoading();
+
+    if (!element.hasAttribute("data-original")) {
+        element.setAttribute("data-original", element.innerHTML);
+    }
+
     element.innerHTML = '<i class="nav-icon fas fa-cog fa-spin"></i> Memuat Data ... ';
-    element.classList.add("disabled");
+    element.classList.add("disabled", "loading");
 
     window.location.href = element.getAttribute("href");
 }
 
 function handleLogout(element) {
+    
+    resetLoading();
+
+    if (!element.hasAttribute("data-original")) {
+        element.setAttribute("data-original", element.innerHTML);
+    }
+
     element.innerHTML = '<i class="nav-icon fas fa-cog fa-spin"></i> Memuat Data ...';
-    element.classList.add("disabled");
+    element.classList.add("disabled", "loading");
 
     document.getElementById("logout-form").submit();
 }
 
-window.addEventListener("pageshow", function () {
-    document.querySelectorAll(".loading").forEach((el) => {
-        el.classList.remove("disabled");
-    });
+window.addEventListener("pageshow", function (event) {
+    if (event.persisted || performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        resetLoading();
+    }
 });
