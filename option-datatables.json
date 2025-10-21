@@ -9,11 +9,11 @@
     "search": "Cari:",
     "zeroRecords": "Data tidak ditemukan",
     "thousands": "'",
-    paginate: {
-          first: "Awal",
-          last: "Akhir",
-          next: "►",
-          previous: "◄",
+    "paginate": {
+          "first": "Awal",
+          "last": "Akhir",
+          "next": "►",
+          "previous": "◄",
       },
     "aria": {
         "sortAscending": ": aktifkan untuk mengurutkan kolom ke atas",
